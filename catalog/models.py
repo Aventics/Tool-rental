@@ -7,7 +7,7 @@ class Purpose(models.Model):
     """
     Model representing a purpose of tools.
     """   
-    name = models.Charfield(max_length=200, help_text='Enter a purpose of tool')
+    name = models.CharField(max_length=200, help_text='Enter a purpose of tool')
 
     def __str__(self):
         """
