@@ -25,6 +25,13 @@ class Tool(models.Model):
     description = models.TextField(max_length=1000, help_text='Enter a brief description')
     purpose = models.ManyToManyField(Purpose, help_text='Select a purpose for this tool')
 
+    def display_purpose(self):
+        '''
+        Creates a string for the Purpose. This is required to display purpose in Admin
+        '''
+        return ', '.join([purpose.name for purpose in self.purpose.all()[:3]])
+    display_purpose.short_description = 'Purpose'
+
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
@@ -58,7 +65,7 @@ class ToolUnit(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return f'{self.id} {self.tool.type_tool}'
+        return f'{self.tool.type_tool} {self.id}'
 
 
 class Brand(models.Model):
