@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Catalog Main</h1>
+
+    <p>Welcome to <em>Catalog</em>, main page of our rental shop.</p>
+
+    <h2>Dynamic content</h2>
+
+    <p>The shop has the following record counts:</p>
+    <ul>
+        <li><strong>Tools:</strong> {{ num_tools }}</li>
+        <li><strong>Units:</strong> {{ num_tool_units }}</li>
+        <li><strong>Units available:</strong> {{ num_tool_available }}</li>
+        <li><strong>Brands:</strong> {{ num_brands }}</li>
+    </ul>
+
+{% endblock %}
