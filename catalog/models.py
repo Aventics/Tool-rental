@@ -48,6 +48,7 @@ class ToolUnit(models.Model):
     '''
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for tools unit from the catalog')
     tool = models.ForeignKey(Tool, on_delete=models.SET_NULL, null=True)
+    serial_number = models.CharField(max_length=20, help_text='Enter a serial number', null=True, blank=True)
     due_back = models.DateField(null=True, blank=True)
     LOAN_STATUS = (
         ('m', 'Maintenance'),
@@ -65,7 +66,7 @@ class ToolUnit(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return f'{self.tool.type_tool} {self.id}'
+        return f'{Tool.type_tool} {self.id}'
 
 
 class Brand(models.Model):
@@ -73,7 +74,7 @@ class Brand(models.Model):
     Model representing a tools brand
     '''
     brand_name = models.CharField(max_length=50)
-    serial_number = models.CharField(max_length=20)
+
 
     def get_absolute_url(self):
         return reverse("Brand_detail", args=[str(self.id)])

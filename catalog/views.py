@@ -21,6 +21,6 @@ def catalog_main(request):
     # Drawing HTML-tamplate 'index.html' with data inside 'context'
     return render(
         request = request,
-        template_name='catalog_main_page.html',
+        template_name='catalog_page.html',
         context=context
     ) 
