@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views import generic
 from .models import Tool, ToolUnit, Brand, Purpose
 
 # Create your views here.
@@ -21,6 +22,10 @@ def catalog_main(request):
     # Drawing HTML-tamplate 'index.html' with data inside 'context'
     return render(
         request = request,
-        template_name='catalog_main_page.html',
+        template_name='catalog_page.html',
         context=context
     ) 
+
+
+class ToolListView(generic.ListView):
+    model = Tool
