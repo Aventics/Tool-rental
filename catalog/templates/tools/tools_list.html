@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Список инструмента:</h1>
+
+    {% if tools_list %}
+    <ul>
+        {% for tool in tools_list %}
+        <li>
+            <a href="{{ tool.get_absolute_url }}">{{ tool.type_tool }}</a> ({{ tool.brand_name }})
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>На данный момент инструмента нет.</p>
+    {% endif %}
+{% endblock %}

@@ -1,6 +1,9 @@
+from datetime import date
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 import uuid
+
 
 # Create your models here.
 class Purpose(models.Model):
@@ -39,7 +42,7 @@ class Tool(models.Model):
         return self.type_tool
     
     def get_absolute_url(self):
-        return reverse("type_detail", args=[str(self.id)])
+        return reverse("tool-detail", args=[str(self.id)])
     
 
 class ToolUnit(models.Model):
@@ -50,6 +53,8 @@ class ToolUnit(models.Model):
     tool = models.ForeignKey(Tool, on_delete=models.SET_NULL, null=True)
     serial_number = models.CharField(max_length=20, help_text='Enter a serial number', null=True, blank=True)
     due_back = models.DateField(null=True, blank=True)
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     LOAN_STATUS = (
         ('m', 'Maintenance'),
         ('o', 'On loan'),
@@ -61,6 +66,13 @@ class ToolUnit(models.Model):
 
     class Meta:
         ordering = ['due_back']
+        permissions = (("can_mark_returned", "Set book as returned"),)
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     def __str__(self):
         """
@@ -75,12 +87,16 @@ class Brand(models.Model):
     '''
     brand_name = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['brand_name']
 
     def get_absolute_url(self):
-        return reverse("Brand_detail", args=[str(self.id)])
+        return reverse('brand-detail', args=[str(self.id)])
+    
     
     def __str__(self):
         """
         String for representing the Model object
         """
         return self.brand_name
+    

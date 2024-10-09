@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Тип: {{ tool.type_tool }}</h1>
+
+    <p><strong>Бренд:</strong> <a href="{% url 'brand-detail' tool.brand_name.pk %}">{{ tool.brand_name }}</a></p>
+    <p><strong>Назначение:</strong> {% for purpose in tool.purpose.all %} {{ purpose }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Инструменты</h4>
+
+        {% for copy in tool.toolunit_set.all %}
+            <hr>
+            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+            {% if copy.status != 'a' %}<p><strong>Дата возврата:</strong> {{ copy.due_back }}</p>{% endif %}
+            <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

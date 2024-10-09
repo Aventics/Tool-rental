@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,8 @@ ROOT_URLCONF = 'toolrental.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'toolrental', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'toolrental', 'templates'),
+                 os.path.join(BASE_DIR, 'account', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +126,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'catalog/'
+LOGIN_URL = '/account/login/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Почтовый ящик для восстановления паролей и отправки сообщений
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# EMAIL_HOST = 'smtp.mail.ru' 
+# EMAIL_HOST_USER = ''  # Почтовый ящик магазина
+# EMAIL_HOST_PASSWORD = 'config("EMAIL_PASSWORD")'
+# EMAIL_PORT = 2525 # порт для mail.ru
+# EMAIL_USE_TLS = True
+
