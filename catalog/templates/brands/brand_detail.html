@@ -1,18 +1,19 @@
 {% extends "base_generic.html" %}
     
 {% block content %}
-    <h1>Бренд: {{ tool.brand_name }}</h1>
+    <h1>Бренд: {{ brand.brand_name }}</h1>
 
     <div style="margin-left:20px;margin-top:20px">
         <h4>Инструменты</h4>
-        {% for copy in tool.toolunit_set.all %}
+        {% for copy in brand.toolunit_set.all %}
             <hr>
             <li>{{copy.tool.type_tool}}</li>
 
-            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{copy.tool.type_tool}}, ({{ num_tools }})</p>
+            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{copy.get_status_display}}</p>
             {% if copy.status != 'a' %}<p><strong>Дата возврата:</strong> {{ copy.due_back }}</p>{% endif %}
             
             <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+            <p class="text-muted"><strong>Серийный номер:</strong> {{ copy.serial_number }}</p>
         {% endfor %}
     </div>
 {% endblock %}

@@ -9,6 +9,11 @@
             <li class="{% if toolinst.is_overdue %}text-danger{% endif %}">
                 <a href="{% url 'tool-detail' toolinst.tool.pk %}">{{toolinst.tool.type_tool}}</a> ({{ toolinst.due_back }}) - {{ toolinst.borrower }}
             </li>
+            <li>
+                {% if perms.catalog.can_mark_returned %}-
+                    <a href="{% url 'renew-tool-stuff' toolinst.id %}">Редактировать</a>
+                {% endif %}
+            </li>
         {% endfor %}
         </ul>
 

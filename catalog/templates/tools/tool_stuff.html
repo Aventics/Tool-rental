@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+    <h1>Обновление: {{ toolinst.tool.type_tool }}</h1>
+    <p>Заёмщик: {{ toolinst.borrower }}</p>
+    <p{% if toolinst.is_overdue %} class="text-danger"{% endif %}>Дата возврата: {{ toolinst.due_back }}</p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Обновить"/>
+    </form>
+
+{% endblock %}

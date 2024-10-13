@@ -2,8 +2,8 @@
     
 {% block content %}
     <h1>Тип: {{ tool.type_tool }}</h1>
-
-    <p><strong>Бренд:</strong> <a href="{% url 'brand-detail' tool.brand_name.pk %}">{{ tool.brand_name }}</a></p>
+    {% comment %} toolunit.brand_name.pk найти как обратиться к имени в модели туллюнит {% endcomment %}
+    {% comment %} <p><strong>Бренд:</strong> <a href="{% url 'brand-detail' toolunit.brand_name.pk %}">{{ toolunit.brand_name }}</a></p> {% endcomment %}
     <p><strong>Назначение:</strong> {% for purpose in tool.purpose.all %} {{ purpose }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 
     <div style="margin-left:20px;margin-top:20px">
@@ -11,9 +11,11 @@
 
         {% for copy in tool.toolunit_set.all %}
             <hr>
+            <p><strong>{{ copy.tool.type_tool }} ({{ copy.brand_name }})</strong></p>
             <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
             {% if copy.status != 'a' %}<p><strong>Дата возврата:</strong> {{ copy.due_back }}</p>{% endif %}
             <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+            <p class="text-muted"><strong>Серийный номер:</strong> {{ copy.serial_number }}</p>            
         {% endfor %}
     </div>
 {% endblock %}

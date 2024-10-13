@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
     
 {% block content %}
-    <h1>Brands List</h1>
+    <h1>Список производителей</h1>
 
     {% if brands_list %}
     <ul>
@@ -12,6 +12,6 @@
         {% endfor %}
     </ul>
     {% else %}
-        <p>There are no brands in the shop.</p>
+        <p>Нет производителей.</p>
     {% endif %}
 {% endblock %}

@@ -3,6 +3,18 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Tool, ToolUnit, Brand, Purpose
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+
+
+from .forms import RenewToolForm
 
 
 def catalog_main(request):
@@ -39,6 +51,7 @@ class ToolListView(generic.ListView):
 class ToolDetailView(generic.DetailView):
     model = Tool
     template_name =  'tools/tool_detail.html'
+    paginate_by = 10
 
 
 class BrandListView(generic.ListView):
@@ -49,8 +62,9 @@ class BrandListView(generic.ListView):
 
 
 class BrandDetailView(generic.DetailView):
-    model = Tool
+    model = Brand
     template_name =  'brands/brand_detail.html'
+    paginate_by = 10
 
 
 
@@ -79,6 +93,71 @@ class LoanedToolsByAllListView(LoginRequiredMixin,PermissionRequiredMixin,generi
 
     def get_queryset(self):
         return ToolUnit.objects.filter(status__exact='o').order_by('due_back')
+    
+
+
+@permission_required('catalog.can_mark_returned')
+def renew_tool_stuff(request, pk):
+    tool_inst = get_object_or_404(ToolUnit, pk=pk)
+
+    # Если данный запрос типа POST, тогда
+    if request.method == 'POST':
+
+        # Создаём экземпляр формы и заполняем данными из запроса (связывание, binding):
+        form = RenewToolForm(request.POST)
+
+        # Проверка валидности данных формы:
+        if form.is_valid():
+            # Обработка данных из form.cleaned_data
+            #(здесь мы просто присваиваем их полю due_back)
+            tool_inst.due_back = form.cleaned_data['renewal_date']
+            tool_inst.save()
+
+            # Переход по адресу 'all-borrowed':
+            return HttpResponseRedirect(reverse('all-borrowed') )
+
+    # Если это GET (или какой-либо ещё), создать форму по умолчанию.
+    else:
+        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = RenewToolForm(initial={'renewal_date': proposed_renewal_date,})
+
+    return render(request, 'tools/tool_stuff.html', {'form': form, 'toolinst':tool_inst})
+
+
+class ToolCreate(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    permission_required = 'catalog.can_mark_returned'
+    model = Tool
+    fields = '__all__'
+    template_name = 'tools/tool_form.html'   
+    success_message = "Интсрумент успешно создан."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return response
+
+
+class ToolUpdate(UpdateView):
+    model = Tool
+    fields = '__all__'
+    template_name = 'tools/tool_form.html'
+    update_message = "Интсрумент успешно изменен."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, self.update_message)
+        return response
+
+class ToolDelete(DeleteView):
+    model = Tool
+    success_url = reverse_lazy('tools')
+    template_name = 'tools/tool_confirm_delete.html'
+    delete_message = "Интсрумент успешно удален."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.error(self.request, self.delete_message)
+        return response
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
