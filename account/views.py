@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
 
+
+# Регистрация пользователя
 def register_request(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -18,7 +20,8 @@ def register_request(request):
     form = NewUserForm()
     return render (request=request, template_name="registration/registration_page.html", context={"register_form":form})
 
-    
+
+# Редактирование профиля пользователя   
 @login_required
 def profile_edit(request):
     user_form = UserEditForm(instance=request.user)

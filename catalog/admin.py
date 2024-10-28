@@ -24,11 +24,11 @@ class ToolAdmin(admin.ModelAdmin):
 # Register the admin class for ToolUnit with the decorator
 @admin.register(ToolUnit)
 class ToolUnitAdmin(admin.ModelAdmin):
-    list_display = ('tool', 'brand_name', 'borrower', 'serial_number', 'due_back')
+    list_display = ('tool', 'tool_name', 'brand_name', 'borrower', 'serial_number', 'due_back')
     list_filter = ('status', 'due_back')
     fieldsets = (
         (None, {
-            'fields': ('tool', 'brand_name', 'serial_number', 'id')
+            'fields': ('tool', 'tool_name', 'brand_name', 'serial_number', 'id')
         }),
         ('Availability',{
             'fields': ('status', 'due_back', 'borrower')

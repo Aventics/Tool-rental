@@ -24,7 +24,6 @@ class Tool(models.Model):
     Model representing a tool (Brand name, type and other)
     '''
     type_tool = models.CharField(max_length=200, help_text='Tools type')
-    description = models.TextField(max_length=1000, help_text='Enter a brief description')
     purpose = models.ManyToManyField(Purpose, help_text='Select a purpose for this tool')
 
     def display_purpose(self):
@@ -71,10 +70,13 @@ class ToolUnit(models.Model):
     '''
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for tools unit from the catalog')
     tool = models.ForeignKey(Tool, on_delete=models.SET_NULL, null=True)
+    tool_name = models.CharField(max_length=200, help_text='Enter a tool name', null=True, blank=True)
     brand_name = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(max_length=1000, help_text='Enter a brief description', null=True, blank=True)
     serial_number = models.CharField(max_length=20, help_text='Enter a serial number', null=True, blank=True)
     due_back = models.DateField(null=True, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cover = models.URLField('cover_url', null=True, blank=True, help_text='URL for tool cover')
 
     LOAN_STATUS = (
         ('m', 'На обслуживании'),
@@ -86,7 +88,7 @@ class ToolUnit(models.Model):
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Tool availability')
 
     class Meta:
-        ordering = ['due_back']
+        ordering = ['status']
         permissions = (("can_mark_returned", "Set tool as returned"),)
 
     @property
@@ -94,6 +96,9 @@ class ToolUnit(models.Model):
         if self.due_back and date.today() > self.due_back:
             return True
         return False
+    
+    def get_absolute_url(self):
+        return reverse('tool_unit_update', kwargs={'pk': self.pk})
 
     def __str__(self):
         """

@@ -1,18 +1,17 @@
-
+{% load static %}
 {% block navbar%}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" id='navbar1'>
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Лого</a>
+        <a class="navbar-brand" href="{% url 'catalog_main' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'catalog_main' %}">Каталог</a>
+                    <a class="nav-link" href="{% url 'catalog_main' %}">Главная</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'tools' %}">Инструменты</a>
@@ -29,25 +28,22 @@
                             {% endif %}
                             <li><a class="dropdown-item" href="{% url 'my-borrowed' %}">Мои инструменты</a></li>
                             <li><a class="dropdown-item" href="{% url 'edit' %}">Редактировать профиль</a></li>
-                            <li><a class="dropdown-item" href="#">Другое действие</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li class="dropdown-item">
-                            <form method="POST", action="{% url 'logout'%}?next={{request.path}}">
-                                {%csrf_token%}
+                            <form method="POST", action="{% url 'logout' %}?next={{ request.path }}">
+                                {% csrf_token %}
                                 <button class="nav-link", type=submit>Выйти</button>
                             </form>
                             </li>
                         </ul>
                     </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Отключенная</a>
-                </li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Войти</a></li>
                 {% endif %}
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+            <form class="d-flex" action="{% url 'searching'%}" method="POST" >
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" name='searched'>
                 <button class="btn btn-outline-success" type="submit">Поиск</button>
             </form>
         </div>

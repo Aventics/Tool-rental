@@ -1,0 +1,98 @@
+
+/* Устанавливаем легкий фон для всего тела документа */
+body {
+  background-color: #f7f6f6; /* Светлый фон */
+  color: #343a40; /* Темный текст */
+  font-family: Arial, sans-serif; /* Шрифт */
+}
+
+/* Стили для навигационной панели */
+.navbar{
+  padding-bottom: 0;
+  margin-bottom: 50px;
+}
+nav div{
+  background-color: #c3d4e6; /* Основной цвет навигации */
+}
+
+.navbar-brand img {
+  width: 75px; /* Уменьшаем размер логотипа */
+  height: auto; /* Автоматическая высота для сохранения пропорций */
+}
+
+/* Стили для ссылок в навигации */
+.nav-link {
+  color: #bc0000 !important; /* Белый цвет для текста ссылок */
+}
+
+.nav-link:hover {
+  color: #f15353 !important; /* Цвет при наведении */
+}
+
+.dropdown-menu {
+  background-color: #c3d4e6;
+  color:#bc0000;
+}
+
+/* Стили для кнопок */
+.btn-outline-success {
+  border-color: #28a745; /* Цвет границы */
+  color: #2ba948; /* Цвет текста */
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745; /* Цвет фона при наведении */
+  color: white; /* Цвет текста при наведении */
+}
+
+/* Стили для формы поиска */
+.form-control {
+  border-radius: 0; /* Убираем закругления */
+}
+
+.form-control:focus {
+  box-shadow: none; /* Убираем тень при фокусе */
+  border-color: #007bff; /* Цвет границы при фокусе */
+}
+
+/* Стили для пагинации */
+.pagination {
+  justify-content: center; /* Центрируем пагинацию */
+}
+
+.pagination .page-item .page-link {
+  color: #007bff; /* Цвет текста */
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff; /* Цвет активной страницы */
+  border-color: #004085; /* Цвет границы активной страницы */
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #8ebff0; /* Цвет фона при наведении */
+  color: #007bff; /* Цвет текста при наведении */
+}
+
+.btn{
+  background-color: #c1c1c1;
+}
+
+.btn:hover{
+  background-color: #8c8c8c;
+}
+
+.slog{
+  font-family:fantasy;
+  font-style: italic;
+  color: #bc0000;
+  /* background-color: #343a40; */
+  /* width: 400; */
+}
+
+
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+  }

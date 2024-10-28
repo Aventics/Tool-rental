@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
-# registration
+# Регистрация
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -19,12 +19,15 @@ class NewUserForm(UserCreationForm):
             user.save()
         return user
 
-# Profile    
+   
+    # Редактирование пользователя
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+
+    # Редактирование профиля
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile

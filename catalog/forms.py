@@ -17,3 +17,9 @@ class RenewToolForm(forms.Form):
             raise ValidationError(('Не верная дата. Число не может быть больше чем через 4 недели'))
 
         return data
+    
+    
+    
+
+class UploadToolsFileForm(forms.Form):
+    file = forms.FileField()
