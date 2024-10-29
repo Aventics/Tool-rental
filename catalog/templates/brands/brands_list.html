@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Список производителей</h1>
+
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'brand_create' %}">Создать</a>
+    {% endif %}
+
+    {% if brands_list %}
+    <ul>
+        {% for brand in brands_list %}
+        <li>
+            <a href="{{ brand.get_absolute_url }}">{{ brand.brand_name }}</a>
+        </li>
+            {% if perms.catalog.can_mark_returned %}
+                {% if brand.pk %}
+                    <a href="{% url 'brand_update' brand.pk %}">Изменить</a>
+                    <a href="{% url 'brand_delete' brand.pk %}">Удалить</a>
+                {% else %}
+                    <span>Идентификатор отсутствует</span>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Нет производителей.</p>
+    {% endif %}
+
+
+{% endblock %}

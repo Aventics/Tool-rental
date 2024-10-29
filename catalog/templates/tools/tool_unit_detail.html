@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Детали инструмента</h1>
+    <div class='row'>
+        {% if perms.catalog.can_mark_returned %}
+            <a href="{% url 'tool_unit_update' tool_unit.id %}">Изменить</a>
+            <a href="{% url 'tool_unit_delete' tool_unit.id %}">Удалить</a>
+        {% endif %}
+        <div class='col-md-2'>
+            <img src='{{tool_unit.cover}}' style='width: 100%;'>
+        </div>
+        <div class='col-md-10'>
+            <p><strong>Тип инструмента: </strong><a href="{{ tool_unit.tool.get_absolute_url }}">{{ tool_unit.tool.type_tool }}</a></p>
+            <p><strong>Название инструмента: </strong> {{ tool_unit.tool_name }}</p>
+            <p><strong>Бренд: </strong><a href="{{ tool_unit.brand_name.get_absolute_url }}"> {{ tool_unit.brand_name.brand_name }}</a></p>
+            <p><strong>Серийный номер: </strong> {% if tool_unit.serial_number %}{{ tool_unit.serial_number }}{% else %}Не указан{% endif %}</p>
+            <p>
+                <strong>Статус: </strong>
+                <span class="{% if tool_unit.status == 'a' %}text-success{% elif tool_unit.status == 'd' %}text-danger{% else %}text-warning{% endif %}">
+                    {{ tool_unit.get_status_display }}
+                </span>
+            </p>
+            <p><strong>Дата возврата: </strong> {% if tool_unit.due_back %}{{ tool_unit.due_back }}{% else %}Не указана{% endif %}</p>
+        </div>
+    </div>
+    <div class='col-md-8'>
+        <p><strong>Описание: </strong> {{ tool_unit.description}}</p>
+    </div>
+    <p><a href="{% url 'tools' %}">К списку инструментов</a></p>
+    <p><a href="{% url 'brands' %}">К списку производителей</a></p>
+{% endblock %}

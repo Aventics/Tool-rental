@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Бренд: {{ brand.brand_name }}</h1>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Инструменты</h4>
+        {% for copy in brand.toolunit_set.all %}
+            <hr>
+            <div class='row'>
+                <div class='col-md-2'>
+                    <a href="{% url 'tool-unit-detail' copy.id %}"><img src='{{ copy.cover }}' style='width: 100%;'></a>
+                </div>
+                <div class='col-md-10'>
+                    <a href="{% url 'tool-unit-detail' copy.id %}">{{ copy.tool_name }}</a>
+
+                    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{copy.get_status_display}}</p>
+                    {% if copy.status != 'a' %}<p><strong>Дата возврата:</strong> {{ copy.due_back }}</p>{% endif %}                    
+                    <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

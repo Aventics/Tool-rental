@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Арендованные инструменты:</h1>
+
+    {% if toolunit_list %}
+        <ul>
+        {% for toolinst in toolunit_list %}
+            <li class="{% if toolinst.is_overdue %}text-danger{% endif %}">
+                <a href="{% url 'tool-unit-detail' toolinst.id %}">{{toolinst.tool_name}}</a> ({{ toolinst.due_back }})
+            </li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>Нет арендованных инструментов.</p>
+    {% endif %}
+{% endblock %}

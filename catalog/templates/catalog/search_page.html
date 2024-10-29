@@ -1,0 +1,65 @@
+{% extends "base_generic.html" %}
+{% block content %}
+{% load static %}
+<div class="col-md-8 offset-md-2" style="height:100%">
+    {% if searched %}
+        <h1>Поиск по сайту: {{ searched }}</h1>
+        <h3>Результаты по вашему запросу:</h3>
+        {% if tools_results %}
+            {% for result in tools_results %}
+                <div class="col-md-auto">
+                    {% if result.cover %}
+                        <img class = "img_detail" src="{{ result.cover}}" height="150px" alt="Tool Cover" >
+                    {% else %}
+                        <img class = "img_detail" src="" height="150px" alt="Tool Cover" >
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <div class="row">
+                        <a href="{% url 'tool-detail' result.pk %}"><h2>{{ result.type_tool }}</h2></a>
+                    </div>
+                </div>
+            <hr>
+            {% endfor %}
+        {% endif %}
+        {% if brand_results %}
+            {% for result in brand_results %}
+                <div class="col-md-auto">
+                    {% if result.cover %}
+                        <img class = "img_detail" src="{{ result.cover}}" height="150px" alt="Brand Cover" >
+                    {% else %}
+                        <img class = "img_detail" src="" height="150px" alt="Brand Cover" >
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <div class="row">
+                        <a href="{% url 'brand-detail' result.pk %}"><h2>{{ result.brand_name }}</h2></a>                                
+                    </div>
+                </div>
+            <hr>
+            {% endfor %}
+        {% endif %}
+        {% if tool_unit_results %}
+            {% for result in tool_unit_results %}
+                <div class="col-md-auto">
+                    {% if result.cover %}
+                        <img class = "img_detail" src="{{ result.cover }}" height="150px" alt="ToolUnit Cover" >
+                    {% else %}
+                        <img class = "img_detail" src="" height="150px" alt="ToolUnit Cover" >
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <div class="row">
+                        <a href="{% url 'tool-unit-detail' result.pk %}"><h2>{{ result.tool_name }}</h2></a>
+                        <div class="row ">
+                            <small>Бренд: {{ result.brand_name }}
+                            </small>
+                        </div>
+                    </div>
+            <hr>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+</div>
+</div>
+{% endblock %}

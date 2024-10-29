@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Тип: {{ tool.type_tool }}</h1>
+    <p><strong>Назначение:</strong> {% for purpose in tool.purpose.all %} {{ purpose }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Инструменты</h4>
+        {% if perms.catalog.can_mark_returned %}
+            <a href="{% url 'tool_unit_create' %}">Создать</a>
+        {% endif %}
+
+
+        {% for copy in tool.toolunit_set.all %}
+            <hr>
+            <div class='row'>
+                <div class='col-md-2'>
+                    <a href="{% url 'tool-unit-detail' copy.id %}"><img src='{{ copy.cover }}' style='width: 100%;' ></a>
+                </div>
+                <div class='col-md-10'>
+                    <ul>
+                        <li>
+                            <p>
+                                <a href="{% url 'tool-unit-detail' copy.id %}">
+                                    {{ copy.tool_name }}
+                                </a>
+                                {% if perms.catalog.can_mark_returned %}
+                                    <a href="{% url 'tool_unit_update' copy.id %}">Изменить</a>
+                                    <a href="{% url 'tool_unit_delete' copy.id %}">Удалить</a>
+                                {% endif %}
+                            </p>
+                        </li>
+                        <li>
+                            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">
+                                {{ copy.get_status_display }}
+                            </p>
+                            <p><strong>Дата возврата: </strong> {% if tool_unit.due_back %}{{ tool_unit.due_back }}{% else %}Не указана{% endif %}</p>
+                            <p class="text-muted"><strong>Id: </strong> {{ copy.id }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

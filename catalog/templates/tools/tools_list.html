@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+    
+{% block content %}
+    <h1>Список инструмента:</h1>
+
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'tool_create' %}">Создать</a>
+    {% endif %}
+
+    {% if tools_list %}
+    <ul>
+        {% for tool in tools_list %}
+        <li>
+            <a href="{{ tool.get_absolute_url }}">{{ tool.type_tool }}</a>
+        </li>
+        {% if perms.catalog.can_mark_returned %}
+            <a href="{% url 'tool_update' tool.id %}">Изменить</a>
+            <a href="{% url 'tool_delete' tool.id %}">Удалить</a>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>На данный момент инструмента нет.</p>
+    {% endif %}
+{% endblock %}
