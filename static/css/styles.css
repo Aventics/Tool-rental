@@ -1,9 +1,9 @@
 
-/* Устанавливаем легкий фон для всего тела документа */
+/* Фон для всего тела документа */
 body {
-  background-color: #f7f6f6; /* Светлый фон */
-  color: #343a40; /* Темный текст */
-  font-family: Arial, sans-serif; /* Шрифт */
+  background-color: #f7f6f6;
+  color: #343a40; 
+  font-family: Arial, sans-serif; 
 }
 
 /* Стили для навигационной панели */
@@ -16,19 +16,20 @@ nav div{
 }
 
 .navbar-brand img {
-  width: 75px; /* Уменьшаем размер логотипа */
-  height: auto; /* Автоматическая высота для сохранения пропорций */
+  width: 75px; /* размер логотипа */
+  height: auto; 
 }
 
 /* Стили для ссылок в навигации */
 .nav-link {
-  color: #bc0000 !important; /* Белый цвет для текста ссылок */
+  color: #bc0000; /* Цвет для текста ссылок */
 }
 
 .nav-link:hover {
-  color: #f15353 !important; /* Цвет при наведении */
+  color: #f15353; /* Цвет при наведении */
 }
 
+/* Выпадающее меню */
 .dropdown-menu {
   background-color: #c3d4e6;
   color:#bc0000;
@@ -36,10 +37,11 @@ nav div{
 
 /* Стили для кнопок */
 .btn-outline-success {
-  border-color: #28a745; /* Цвет границы */
-  color: #2ba948; /* Цвет текста */
+  border-color: #28a745; 
+  color: #2ba948; 
 }
 
+/* Кнопка поиска */
 .btn-outline-success:hover {
   background-color: #28a745; /* Цвет фона при наведении */
   color: white; /* Цвет текста при наведении */
@@ -74,6 +76,7 @@ nav div{
   color: #007bff; /* Цвет текста при наведении */
 }
 
+/* Кнопки */
 .btn{
   background-color: #c1c1c1;
 }
@@ -82,14 +85,12 @@ nav div{
   background-color: #8c8c8c;
 }
 
+/* Заголовок слайда */
 .slog{
-  font-family:fantasy;
-  font-style: italic;
-  color: #bc0000;
-  /* background-color: #343a40; */
-  /* width: 400; */
+  font-family:fantasy; /* шрифт */
+  font-style: italic; /* курсив */
+  color: #bc0000; /* цвет текста */
 }
-
 
 .sidebar-nav {
     margin-top: 20px;

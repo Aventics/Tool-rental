@@ -3,25 +3,25 @@ from .models import Brand, Purpose, Tool, ToolUnit
 
 admin.site.register(Purpose)
 
-
+# Регистрация класса Brand
 class BrandAdmin(admin.ModelAdmin):
     pass
-
-# Register the admin class with the associated model
 admin.site.register(Brand, BrandAdmin)
+
 
 class ToolUnitInline(admin.TabularInline):
     extra = 0
     model = ToolUnit
 
-# Register the admin classes for Tool using the decorator
+
+# Регистрация класса  Tool с использованием декоратора
 @admin.register(Tool)
 class ToolAdmin(admin.ModelAdmin):
     list_display = ('type_tool', 'display_purpose')
     inlines = [ToolUnitInline]
 
 
-# Register the admin class for ToolUnit with the decorator
+# # Регистрация класса  ToolUnit с использованием декоратора
 @admin.register(ToolUnit)
 class ToolUnitAdmin(admin.ModelAdmin):
     list_display = ('tool', 'tool_name', 'brand_name', 'borrower', 'serial_number', 'due_back')

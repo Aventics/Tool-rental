@@ -2,7 +2,7 @@ import pandas
 from tqdm import tqdm
 from .models import Tool, ToolUnit, Brand
 
-
+# Форма для создания экземпляра инструмента
 def create_toolunit_from_df(df: pandas.DataFrame):
 
     for index, row in df.iterrows():

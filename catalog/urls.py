@@ -21,6 +21,9 @@ urlpatterns = [
         re_path(r'^toolunit/create/$', views.ToolUnitCreate.as_view(), name='tool_unit_create'),
         re_path(r'^toolunit/(?P<pk>[0-9a-f-]+)/update/$', views.ToolUnitUpdate.as_view(), name='tool_unit_update'),
         re_path(r'^toolunit/(?P<pk>[0-9a-f-]+)/delete/$', views.ToolUnitDelete.as_view(), name='tool_unit_delete'),
+        re_path(r'^brand/create/$', views.BrandCreate.as_view(), name='brand_create'),
+        re_path(r'^brand/(?P<pk>\d+)/update/$', views.BrandUpdate.as_view(), name='brand_update'),
+        re_path(r'^brand/(?P<pk>\d+)/delete/$', views.BrandDelete.as_view(), name='brand_delete'),
 
         path("search/", views.searching, name="searching"),
         

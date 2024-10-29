@@ -21,7 +21,7 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">User: {{ user.get_username }}</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Пользователь: {{ user.get_username }}</a>
                         <ul class="dropdown-menu">
                             {% if perms.catalog.can_mark_returned %}
                                 <li><a class="dropdown-item" href="{% url 'all-borrowed' %}">Арендованные</a></li>
